@@ -22,3 +22,28 @@ select,
 textarea {
     max-width: 280px;
 }
+.box {
+    padding-top:20px;
+}
+.btn.btn-dark {
+    background-color:#222;
+    border: outset 2px #080808;
+    color:white;
+}
+
+.form-control.cordinates {
+    width:49%;
+    max-width:138px;
+    display:inline-block;
+}
+.new-line-top-margin {
+    margin-top:10px;
+    display:block;
+}
+.inline-top-margin {
+    margin-top:10px;
+    display:inline-block;
+}
+.change-password {
+    margin-bottom:50px;
+}

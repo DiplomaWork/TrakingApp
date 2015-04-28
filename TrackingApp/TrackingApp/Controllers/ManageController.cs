@@ -13,6 +13,7 @@ namespace TrackingApp.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        private TrackingEntitiesContext db = new TrackingEntitiesContext();
         public ManageController()
         {
         }
@@ -37,26 +38,11 @@ namespace TrackingApp.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public ActionResult Index()
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
-
-            var model = new IndexViewModel
-            {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(User.Identity.GetUserId()),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(User.Identity.GetUserId()),
-                Logins = await UserManager.GetLoginsAsync(User.Identity.GetUserId()),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(User.Identity.GetUserId())
-            };
-            return View(model);
+            var userID = User.Identity.GetUserId();
+            var user = db.AspNetUsers.Find(userID);
+            return View(user.Address);
         }
 
         //
@@ -66,6 +52,34 @@ namespace TrackingApp.Controllers
             var linkedAccounts = UserManager.GetLogins(User.Identity.GetUserId());
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return View(linkedAccounts);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeAddress(Address address) 
+        {
+            if (ModelState.IsValid)
+            {
+                var userID = User.Identity.GetUserId();
+                var user = db.AspNetUsers.Find(userID);
+                if (user != null)
+                {
+                    if (user.Address == null)
+                    {
+                        user.Address = address;
+                    }
+                    db.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
+                ViewBag.Error = "Error in address form, can`t save it.";
+            }
+            return View("Index",address);
         }
 
         //

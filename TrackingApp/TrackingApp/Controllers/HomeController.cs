@@ -26,5 +26,10 @@ namespace TrackingApp.Controllers
 
             return View();
         }
+
+        public ActionResult News()
+        {
+            return View();
+        }
     }
 }

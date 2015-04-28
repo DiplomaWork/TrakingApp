@@ -13,10 +13,10 @@ namespace TrackingApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class TrackingAppEntitiesContext : DbContext
+    public partial class TrackingEntitiesContext : DbContext
     {
-        public TrackingAppEntitiesContext()
-            : base("name=TrackingAppEntitiesContext")
+        public TrackingEntitiesContext()
+            : base("name=TrackingEntitiesContext")
         {
         }
     
@@ -26,6 +26,7 @@ namespace TrackingApp.Models
         }
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }

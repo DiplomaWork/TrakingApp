@@ -167,37 +167,40 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Address.cs">
+      <DependentUpon>TrackingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AspNetRole.cs">
-      <DependentUpon>TrackingAppModel.tt</DependentUpon>
+      <DependentUpon>TrackingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>TrackingAppModel.tt</DependentUpon>
+      <DependentUpon>TrackingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>TrackingAppModel.tt</DependentUpon>
+      <DependentUpon>TrackingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>TrackingAppModel.tt</DependentUpon>
+      <DependentUpon>TrackingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>TrackingAppModel.tt</DependentUpon>
+      <DependentUpon>TrackingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\TrackingAppModel.Context.cs">
+    <Compile Include="Models\TrackingModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TrackingAppModel.Context.tt</DependentUpon>
+      <DependentUpon>TrackingModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TrackingAppModel.cs">
+    <Compile Include="Models\TrackingModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TrackingAppModel.tt</DependentUpon>
+      <DependentUpon>TrackingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TrackingAppModel.Designer.cs">
+    <Compile Include="Models\TrackingModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TrackingAppModel.edmx</DependentUpon>
+      <DependentUpon>TrackingModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -211,23 +214,24 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\TrackingAppModel.edmx">
+    <EntityDeploy Include="Models\TrackingModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TrackingAppModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>TrackingModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\TrackingAppModel.Context.tt">
+    <Content Include="Models\TrackingModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TrackingAppModel.edmx</DependentUpon>
-      <LastGenOutput>TrackingAppModel.Context.cs</LastGenOutput>
+      <DependentUpon>TrackingModel.edmx</DependentUpon>
+      <LastGenOutput>TrackingModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\TrackingAppModel.edmx.diagram">
-      <DependentUpon>TrackingAppModel.edmx</DependentUpon>
+    <Content Include="Models\TrackingModel.edmx.diagram">
+      <DependentUpon>TrackingModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\TrackingAppModel.tt">
+    <Content Include="Models\TrackingModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TrackingAppModel.edmx</DependentUpon>
-      <LastGenOutput>TrackingAppModel.cs</LastGenOutput>
+      <DependentUpon>TrackingModel.edmx</DependentUpon>
+      <LastGenOutput>TrackingModel.cs</LastGenOutput>
     </Content>
+    <None Include="Properties\PublishProfiles\PublishProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -240,7 +244,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -278,6 +284,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\News.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

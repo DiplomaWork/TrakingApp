@@ -38,6 +38,12 @@ namespace TrackingApp.Controllers
                 _userManager = value;
             }
         }
+        [Authorize]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
 
         //
         // GET: /Account/Login
