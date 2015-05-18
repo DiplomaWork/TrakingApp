@@ -30,12 +30,6 @@ textarea {
     border: outset 2px #080808;
     color:white;
 }
-
-.form-control.cordinates {
-    width:49%;
-    max-width:138px;
-    display:inline-block;
-}
 .new-line-top-margin {
     margin-top:10px;
     display:block;
@@ -46,4 +40,45 @@ textarea {
 }
 .change-password {
     margin-bottom:50px;
+}
+.address .map {
+    height:300px;
+}
+footer {
+    clear:both;
+}
+.no-top-margin {
+    margin-top:0;
+}
+.route .edit {
+    position:absolute;
+    top:5px;
+    right:35px;
+    width:25px;
+    height:24px;
+    line-height:25px;
+    cursor:pointer;
+    background-image: url("/images/writing-312112_640.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+    color:rgba(0,0,0,0);
+} 
+.route .delete {
+    position:absolute;
+    top:5px;
+    right:5px;
+    width:25px;
+    height:25px;
+    cursor:pointer;
+    background-image: url("/images/delete.png");
+    background-repeat:no-repeat;
+    background-size:contain;
+} 
+.route {
+    position:relative;
+}
+.not-active {
+   pointer-events: none;
+   cursor: default;
+   opacity:0.5;
 }

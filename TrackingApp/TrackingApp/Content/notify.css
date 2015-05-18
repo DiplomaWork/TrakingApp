@@ -1,0 +1,84 @@
+
+.notify-container { position: fixed; width: 350px; }
+
+
+.notify-container-top-left,
+.notify-container-top-center,
+.notify-container-top-right {
+    top: 50px;
+}
+
+.notify-container-bottom-left,
+.notify-container-bottom-center,
+.notify-container-bottom-right {
+    bottom: 0px; 
+}
+
+
+.notify-container-top-left,
+.notify-container-bottom-left{
+    left: 0px; 
+}
+
+.notify-container-top-center,
+.notify-container-bottom-center {
+    right: 50%; margin-right: -175px;
+}
+
+.notify-container-top-right,
+.notify-container-bottom-right { 
+    right: 0px;
+}
+
+.notify { padding: 15px 25px; position: relative; border: 1px solid transparent; border-radius: 4px; margin: 10px; }
+
+/*
+.notify-container-top-left .notify,
+.notify-container-top-center .notify,
+.notify-container-top-right .notify {
+    margin-bottom: 10px; 
+}
+
+.notify-container-bottom-left .notify,
+.notify-container-bottom-center .notify,
+.notify-container-bottom-right .notify {
+    margin-top: 10px; 
+}
+*/
+
+.notify h4 { margin-top: 0; color: inherit; } 
+.notify .notify-link { font-weight: bold; }
+
+.notify > p,
+.notify > ul {
+  margin-bottom: 0;
+}
+
+
+.notify > p + p { margin-top: 5px; }
+.notify .close { position: absolute; top: 10px; right: 10px; color: inherit; text-shadow: none; outline: none; }
+
+.notify-default { color: #404548; background-color: #fcfcfc; border-color: #e2e2e2; }
+.notify-default hr { border-top-color: #dcdcdc; }
+.notify-default .notify-link { color: #3d4042; }
+
+.notify-success { color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; }
+.notify-success hr { border-top-color: #c9e2b3; }
+.notify-success .notify-link { color: #2b542c; }
+
+.notify-info { white-space:pre-line; color: #31708f; background-color: #d9edf7; border-color: #bce8f1; }
+.notify-info hr { border-top-color: #a6e1ec; }
+.notify-info .notify-link { color: #245269; }
+
+.notify-warning { color: #8a6d3b; background-color: #fcf8e3; border-color: #faebcc; }
+.notify-warning hr { border-top-color: #f7e1b5; }
+.notify-warning .notify-link { color: #66512c; }
+
+.notify-error { color: #a94442; background-color: #f2dede; border-color: #ebccd1; }
+.notify-error hr { border-top-color: #e4b9c0; }
+.notify-error .notify-link { color: #843534; }
+
+
+.notify-inverse { color: #fcfcfc; background-color: #404445; border-color: #777; }
+.notify-inverse hr { border-top-color: #cccccc; }
+.notify-inverse .notify-link { color: #fafafa; }

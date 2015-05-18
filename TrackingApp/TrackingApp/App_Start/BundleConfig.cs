@@ -9,7 +9,8 @@ namespace TrackingApp
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/notify.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -25,8 +26,13 @@ namespace TrackingApp
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
-
+                      "~/Content/site.css",
+                      "~/Content/notify.css"));
+            bundles.Add(new ScriptBundle("~/bundles/mapscript").Include(
+                        "~/Scripts/leaflet.js",
+                        "~/Scripts/leaflet.geometryutil.js"));
+            bundles.Add(new StyleBundle("~/Content/mapstyle").Include(
+                      "~/Content/leaflet.css"));
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
             BundleTable.EnableOptimizations = true;

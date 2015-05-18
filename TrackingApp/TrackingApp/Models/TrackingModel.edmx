@@ -20,7 +20,7 @@
             <PropertyRef Name="AddressId" />
           </Key>
           <Property Name="AddressId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Address" Type="nvarchar" MaxLength="150" />
+          <Property Name="AddressStr" Type="nvarchar" MaxLength="150" />
           <Property Name="City" Type="nvarchar" MaxLength="100" />
           <Property Name="State" Type="nvarchar" MaxLength="100" />
           <Property Name="Country" Type="nvarchar" MaxLength="100" />
@@ -79,6 +79,20 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="AddressId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Coordinates" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Completed" Type="bit" />
+          <Property Name="Private" Type="bit" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Length" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -150,6 +164,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Route_dbo_AspNetUsers_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TrackingModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
@@ -158,6 +186,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -177,6 +206,10 @@
           <AssociationSet Name="FK_dbo_AspNetUsers_dbo_Address_AddressId" Association="Self.FK_dbo_AspNetUsers_dbo_Address_AddressId">
             <End Role="Address" EntitySet="Address" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Route_dbo_AspNetUsers_Id" Association="Self.FK_dbo_Route_dbo_AspNetUsers_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Route" EntitySet="Route" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -199,7 +232,7 @@
             <PropertyRef Name="AddressId" />
           </Key>
           <Property Name="AddressId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Address1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="AddressStr" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -257,7 +290,23 @@
           <NavigationProperty Name="Address" Relationship="Self.FK_dbo_AspNetUsers_dbo_Address_AddressId" FromRole="AspNetUsers" ToRole="Address" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Routes" Relationship="Self.FK_dbo_Route_dbo_AspNetUsers_Id" FromRole="AspNetUsers" ToRole="Route" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Coordinates" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Completed" Type="Boolean" />
+          <Property Name="Private" Type="Boolean" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Length" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_Route_dbo_AspNetUsers_Id" FromRole="Route" ToRole="AspNetUsers" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUsers_dbo_Address_AddressId">
           <End Role="Address" Type="Self.Address" Multiplicity="0..1">
@@ -301,6 +350,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Route_dbo_AspNetUsers_Id">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -312,6 +375,7 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Routes" EntityType="Self.Route" />
           <AssociationSet Name="FK_dbo_AspNetUsers_dbo_Address_AddressId" Association="Self.FK_dbo_AspNetUsers_dbo_Address_AddressId">
             <End Role="Address" EntitySet="Addresses" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -323,6 +387,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Route_dbo_AspNetUsers_Id" Association="Self.FK_dbo_Route_dbo_AspNetUsers_Id">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Route" EntitySet="Routes" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
@@ -349,7 +417,7 @@
             <EntityTypeMapping TypeName="TrackingModel.Address">
               <MappingFragment StoreEntitySet="Address">
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="Address1" ColumnName="Address" />
+                <ScalarProperty Name="AddressStr" ColumnName="AddressStr" />
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
@@ -402,6 +470,21 @@
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="TrackingModel.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Coordinates" ColumnName="Coordinates" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="Private" ColumnName="Private" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

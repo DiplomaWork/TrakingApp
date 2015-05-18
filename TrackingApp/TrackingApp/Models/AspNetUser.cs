@@ -18,6 +18,7 @@ namespace TrackingApp.Models
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
+            this.Routes = new HashSet<Route>();
             this.AspNetRoles = new HashSet<AspNetRole>();
         }
     
@@ -38,6 +39,7 @@ namespace TrackingApp.Models
         public virtual Address Address { get; set; }
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual ICollection<Route> Routes { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
     }
 }

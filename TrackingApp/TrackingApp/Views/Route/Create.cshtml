@@ -1,0 +1,113 @@
+﻿@model TrackingApp.Models.Route
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
+<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' rel='stylesheet' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js'></script>
+<script src="~/Scripts/leaflet.geometryutil.js"></script>
+<div id='map' style="height:600px;" class="col-lg-9 col-xs-12"></div>
+<div class="col-lg-3 col-xs-12">
+    @using (Html.BeginForm())
+    {
+        <div id="error" class="new-line-top-margin" style="color:red;display:none;">
+            Use the map to create a route.
+        </div>
+        @Html.HiddenFor(m => m.UserId)
+        @Html.HiddenFor(m => m.Coordinates)
+        @Html.HiddenFor(m=>m.Length)
+        <div class="new-line-top-margin" style="height:20px;">
+            <span id="LengthLbl"> @Model.Length</span>
+        </div>
+        <div class="new-line-top-margin">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Name", title = "Name", maxlength = "100" })
+        </div>
+        <div class="new-line-top-margin">
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Description", title = "Description" })
+        </div>
+        <div class="new-line-top-margin">
+            @Html.TextBoxFor(m => m.Date, new { @class = "form-control", placeholder = "Date", title = "Date" })
+        </div>
+        <div class="new-line-top-margin">
+            @Html.EditorFor(m => m.Private) <label for="Private">Private</label>
+        </div>
+        <div class="new-line-top-margin">
+            @Html.EditorFor(m => m.Completed) <label for="Completed">Already done</label>
+        </div>
+        <div class="new-line-top-margin">
+            <input type="submit" class="btn btn-success" value="Create" onclick="return check()">
+        </div>
+        }
+        <div style="height:300px;width:100%"></div>
+    </div>
+@section scripts{
+    <script>
+        function check()
+        {
+            var route = $("#Coordinates").val();
+            if (route.length < 1) {
+                $("#error").show();
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+
+        L.mapbox.accessToken = 'pk.eyJ1IjoiZGFudGUwNzU3NyIsImEiOiI3QkcwVVkwIn0.k3lObdjWNaknx-aawksALg';
+        var map = L.mapbox.map('map', 'dante07577.e222d703')
+            .setView([48.5529, 31.5527], 6);
+
+        var featureGroup = L.featureGroup().addTo(map);
+
+        var drawControl = new L.Control.Draw({
+            draw: {
+                position: 'topleft',
+                polygon: false,
+                rectangle: false,
+                circle: false,
+                marker: false,
+                polyline: {
+                    shapeOptions: {
+                        color: 'black'
+                    },
+                },
+
+            },
+            edit: {
+                featureGroup: featureGroup
+            }
+        }).addTo(map);
+        map.on('draw:deleted', function (e) {
+            $(".leaflet-draw-draw-polyline").removeClass("not-active");
+            $("#Length").val("");
+            $("#LengthLbl").text("");
+            $("#Coordinates").val("");
+        });
+        map.on('draw:created', function (e) {
+            featureGroup.addLayer(e.layer);
+            fillTheFields(e.layer.getLatLngs());
+            $(".leaflet-draw-draw-polyline").addClass("not-active");
+        });
+        map.on('draw:edited', function (e) {
+            var layers = e.layers;
+            layers.eachLayer(function (layer) {
+                fillTheFields(layer.getLatLngs());                
+            });
+        });
+        function fillTheFields(coordinates) {
+            var coordinates = coordinates;
+            $("#Coordinates").val(JSON.stringify(coordinates));
+            var length = L.GeometryUtil.length(coordinates);
+            var strLength;
+            if (length / 1000 < 1) {
+                length = length.toString().substring(0, 5);
+                strLength = length + "m";
+            } else {
+                length = (length / 1000).toString();
+                length = length.substring(0, length.indexOf('.') + 2);
+                strLength = length + "km";
+            }
+            $("#Length").val(strLength);
+            $("#LengthLbl").text(strLength);
+        }
+    </script>
+}

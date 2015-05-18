@@ -1,32 +1,34 @@
 ﻿@model TrackingApp.Models.Address
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css' rel='stylesheet' />
 <div class="box">
-    @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new { @class = "btn btn-info change-password" })
+    <div class="col-xs-12 col-lg-12">
+        @Html.ActionLink("Change password", "ChangePassword", "Manage", null, new { @class = "btn btn-info change-password" })
+    </div>
     <div class="address">
-        @using (Html.BeginForm("ChangeAddress", "Manage"))
-        {
-            @Html.HiddenFor(m => m.AddressId)
-            <div class="new-line-top-margin">
-                @Html.TextBoxFor(m => m.Address1, new { @class = "form-control ", placeholder = "Address" })
-            </div>
-            <div class="new-line-top-margin">
-                @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = "Country" })
-            </div>
-            <div class="new-line-top-margin">
-                @Html.TextBoxFor(m => m.State, new { @class = "form-control", placeholder = "State" })
-            </div>
-            <div class="new-line-top-margin">
-                @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "City" })
-            </div>
-            <div class="new-line-top-margin">
-                @Html.TextBoxFor(m => m.Latitude, new { @class = "form-control cordinates", placeholder = "Latitude" })
-                @Html.TextBoxFor(m => m.Longitude, new { @class = "form-control cordinates", placeholder = "Longitude" })
-            </div>
-            <div class="new-line-top-margin">
-                @Html.TextAreaFor(m => m.About, new { @class = "form-control", placeholder = "About you..." })
-            </div>
-            <div class="new-line-top-margin">
-                <input type="submit" class="btn btn-success" value="Save">
-            </div>
-        }
+        <div class="col-xs-12 col-lg-12">
+            @using (Html.BeginForm("Index", "Manage"))
+            {
+                @Html.HiddenFor(m => m.AddressId)
+                <div class="new-line-top-margin">
+                    @Html.TextBoxFor(m => m.AddressStr, new { @class = "form-control ", placeholder = "Address", title = "Address" })
+                </div>
+                <div class="new-line-top-margin">
+                    @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = "Country", title = "Country" })
+                </div>
+                <div class="new-line-top-margin">
+                    @Html.TextBoxFor(m => m.State, new { @class = "form-control", placeholder = "State", title = "State" })
+                </div>
+                <div class="new-line-top-margin">
+                    @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "City", title = "City" })
+                </div>
+                <div class="new-line-top-margin">
+                    @Html.TextAreaFor(m => m.About, new { @class = "form-control", placeholder = "About you...", title = "About you..." })
+                </div>
+                <div class="new-line-top-margin">
+                    <input type="submit" class="btn btn-success" value="Save">
+                </div>
+            }
+        </div>
     </div>
 </div>
+

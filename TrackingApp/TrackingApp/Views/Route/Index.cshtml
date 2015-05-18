@@ -1,0 +1,44 @@
+﻿@model IList<TrackingApp.Models.Route>
+<h1 style="padding:15px;">Your routes @Html.ActionLink("Create new", "Create", "Route", null, new { @class = "btn btn-success"})</h1>
+<div class="container">
+    @foreach (var route in Model)
+    { 
+        <div class="jumbotron route" id="@route.Id">
+            @Html.ActionLink("C", "Edit", "Route", new { id = route.Id},new{@class="edit"})
+            <div class="delete" onclick="removeRoute('@route.Id');"></div>
+            @{
+                DateTime temp = route.Date??DateTime.MinValue;
+                var boolTemp = route.Completed??false;
+             }
+            <h2 class="no-top-margin">@route.Name@if (route.Date.HasValue) {<text> - @temp.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</text>}</h2>
+            <h3 style="color:@if(route.Completed!=null && boolTemp){<text>green</text>}else{<text>#FFA200</text>}">@route.Length</h3>
+            <h3>@route.Description</h3>
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script>
+        function removeRoute(id)
+            {
+                $.ajax({
+                    url: "/Route/Delete",
+                    type: "POST",
+                    success: function (result) {
+                        $("#" + result.id).remove();
+                    },
+                    error: function () {
+                        $.notify({
+                            message: "Can`t do that :`(",
+                            position: "top-center",
+                            status: "error",
+                            displayTimeout: 5000
+                        });
+                    },
+                    contentType: 'application/json',
+                    dataType: "json",
+                    data: JSON.stringify({ id:id })
+                });
+            }
+    </script>
+}

@@ -55,7 +55,7 @@ namespace TrackingApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeAddress(Address address) 
+        public ActionResult Index(Address address)
         {
             if (ModelState.IsValid)
             {
@@ -63,10 +63,7 @@ namespace TrackingApp.Controllers
                 var user = db.AspNetUsers.Find(userID);
                 if (user != null)
                 {
-                    if (user.Address == null)
-                    {
-                        user.Address = address;
-                    }
+                    user.Address = address;
                     db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                 }
@@ -79,7 +76,8 @@ namespace TrackingApp.Controllers
             {
                 ViewBag.Error = "Error in address form, can`t save it.";
             }
-            return View("Index",address);
+            return View(address);
+            
         }
 
         //
